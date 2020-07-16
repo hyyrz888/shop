@@ -1,32 +1,28 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div id="app" class="wrapper">
+    <keep-alive exclude="Detail">
+      <router-view/>
+    </keep-alive>
+<!-- 使用组件 -->
+    <main-tab-bar/>
   </div>
 </template>
 
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+//引入组件
+import MainTabBar from "components/content/mainTabbar/MainTabBar"
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+export default {
+  name: 'App',
+  components: {
+    MainTabBar
   }
 }
+</script>
+
+<style>
+  @import "assets/css/base.css";
+  body{
+    background:#f5f5f5
+  }
 </style>

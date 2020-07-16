@@ -1,29 +1,68 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Home from '../views/home/Home.vue'
+import Category from '../views/category/Category.vue'
+import Cart from '../views/cart/Cart.vue'
+import Profile from '../views/profile/Profile.vue'
+import News from '../views/news/News.vue'
+import Phone from '../views/phone/Phone.vue'
+//const Cart = () => import('../views/cart/Cart');
+// const Category = () => import('../views/category/Category');
+// const Profile = () => import('../views/profile/Profile');
+// const Detail = () => import('../views/detail/Detail');
 
 Vue.use(VueRouter)
 
-  const routes = [
+//解决导航栏中重复点击菜单报错问题
+const originalPush = VueRouter.prototype.replace;
+VueRouter.prototype.replace = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
+const routes = [
+  // {
+  //    path: '',
+  //    redirect: '/home',
+  // },
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/category',
+    name: 'Category',
+    component: Category
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile
+  },
+  {
+    path:'/news',
+    name:'News',
+    component:News
+  },
+  {
+    path:'/phone',
+    name:'Phone',
+    component:Phone
   }
 ]
 
+
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',  //去掉地址栏#
   base: process.env.BASE_URL,
   routes
 })
 
+//重定向到home，同等于上面的redirect
+router.replace('/home')
 export default router
