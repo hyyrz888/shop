@@ -1,0 +1,5 @@
+state  存放状态
+mutations states 成员操作
+getters 加工成员给外界
+actions 异步操作
+modules 模块化状态管理

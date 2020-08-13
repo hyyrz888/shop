@@ -1,7 +1,8 @@
 <template>
   <swiper>
-    <swiper-item v-for="item in banners">
+    <swiper-item v-for="(item,index) in banners" :key="index">
       <a :href="item.link">
+        <!-- 图片load加载完成后 -->
         <img :src="item.image" alt="" @load="imageLoad">
       </a>
     </swiper-item>
@@ -9,7 +10,7 @@
 </template>
 
 <script>
-  import {Swiper, SwiperItem} from 'components/common/swiper/index'
+  import {Swiper, SwiperItem} from 'components/common/swiper'
 
   export default {
     name: "HomeSwiper",

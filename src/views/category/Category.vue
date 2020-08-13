@@ -1,160 +1,170 @@
 <template>
-  <div class="wrapper" ref="aaaa">
-    <div>
-      <!--1.无论是否设置click:false, button都可以点击-->
-      <button @click="btnClick">按钮</button>
+	<div class="wrapper" ref="aaaa">
+		<!--tabbar-->
+		<nav-bar class="category-nav"><div slot="center">产品分类</div></nav-bar>
 
-      <!--2.必须设置click:true, 那么div才能监听点击-->
-      <div @click="divClick">呵呵呵呵</div>
+		<div class="content">
+			<!--左侧分类-->
+			<tab-menu :catelist="getCateDatelist" @selectItem="selectIndex"></tab-menu>
 
-      <ul class="content">
-        <li>分类列表1</li>
-        <li>分类列表2</li>
-        <li>分类列表3</li>
-        <li>分类列表4</li>
-        <li>分类列表5</li>
-        <li>分类列表6</li>
-        <li>分类列表7</li>
-        <li>分类列表8</li>
-        <li>分类列表9</li>
-        <li>分类列表10</li>
-        <li>分类列表11</li>
-        <li>分类列表12</li>
-        <li>分类列表13</li>
-        <li>分类列表14</li>
-        <li>分类列表15</li>
-        <li>分类列表16</li>
-        <li>分类列表17</li>
-        <li>分类列表18</li>
-        <li>分类列表19</li>
-        <li>分类列表20</li>
-        <li>分类列表21</li>
-        <li>分类列表22</li>
-        <li>分类列表23</li>
-        <li>分类列表24</li>
-        <li>分类列表25</li>
-        <li>分类列表26</li>
-        <li>分类列表27</li>
-        <li>分类列表28</li>
-        <li>分类列表29</li>
-        <li>分类列表30</li>
-        <li>分类列表31</li>
-        <li>分类列表32</li>
-        <li>分类列表33</li>
-        <li>分类列表34</li>
-        <li>分类列表35</li>
-        <li>分类列表36</li>
-        <li>分类列表37</li>
-        <li>分类列表38</li>
-        <li>分类列表39</li>
-        <li>分类列表40</li>
-        <li>分类列表41</li>
-        <li>分类列表42</li>
-        <li>分类列表43</li>
-        <li>分类列表44</li>
-        <li>分类列表45</li>
-        <li>分类列表46</li>
-        <li>分类列表47</li>
-        <li>分类列表48</li>
-        <li>分类列表49</li>
-        <li>分类列表50</li>
-        <li>分类列表51</li>
-        <li>分类列表52</li>
-        <li>分类列表53</li>
-        <li>分类列表54</li>
-        <li>分类列表55</li>
-        <li>分类列表56</li>
-        <li>分类列表57</li>
-        <li>分类列表58</li>
-        <li>分类列表59</li>
-        <li>分类列表60</li>
-        <li>分类列表61</li>
-        <li>分类列表62</li>
-        <li>分类列表63</li>
-        <li>分类列表64</li>
-        <li>分类列表65</li>
-        <li>分类列表66</li>
-        <li>分类列表67</li>
-        <li>分类列表68</li>
-        <li>分类列表69</li>
-        <li>分类列表70</li>
-        <li>分类列表71</li>
-        <li>分类列表72</li>
-        <li>分类列表73</li>
-        <li>分类列表74</li>
-        <li>分类列表75</li>
-        <li>分类列表76</li>
-        <li>分类列表77</li>
-        <li>分类列表78</li>
-        <li>分类列表79</li>
-        <li>分类列表80</li>
-        <li>分类列表81</li>
-        <li>分类列表82</li>
-        <li>分类列表83</li>
-        <li>分类列表84</li>
-        <li>分类列表85</li>
-        <li>分类列表86</li>
-        <li>分类列表87</li>
-        <li>分类列表88</li>
-        <li>分类列表89</li>
-        <li>分类列表90</li>
-        <li>分类列表91</li>
-        <li>分类列表92</li>
-        <li>分类列表93</li>
-        <li>分类列表94</li>
-        <li>分类列表95</li>
-        <li>分类列表96</li>
-        <li>分类列表97</li>
-        <li>分类列表98</li>
-        <li>分类列表99</li>
-        <li>分类列表100</li>
-      </ul>
-    </div>
-  </div>
+			<scroll class="tab-content" :data="[categoryData]">
+				<!--二级分类-->
+				<tab-content-category :subcate="showsubcategory"></tab-content-category>
+
+				<!--选项卡-->
+				<tab-control :titles="['综合', '新品', '热销']" @tabClick="itemClick" :tab-index='tabindex' />
+				<!--详情-->
+				<tab-content-detail :detaillist="showDetail"></tab-content-detail>
+			</scroll>
+		</div>
+	</div>
 </template>
 
 <script>
-  //import BScroll from 'better-scroll'
+import NavBar from 'components/common/navbar/NavBar';
+import TabMenu from './childComps/TabMenu';
+import TabContentCategory from './childComps/TabContentCategory';
+import TabContentDetail from './childComps/TabContentDetail';
 
-  export default {
-    name: "Category",
-    data() {
-      return {
-        scroll: null
-      }
-    },
-    // 组件创建完后调用
-    mounted() {
-      this.scroll = new BScroll(this.$refs.aaaa, {
-        // probeType: 3,
-        // pullUpLoad: true
-      })
+import TabControl from 'components/content/tabControl/TabControl';
+import Scroll from 'components/common/scroll/Scroll';
 
-      this.scroll.on('scroll', (position) => {
-        console.log(position);
-      })
 
-      this.scroll.on('pullingUp', () => {
-        console.log('上啦加载更多');
-      })
-    },
-    methods: {
-      btnClick() {
-        console.log('btnClick');
-      },
-      divClick() {
-        console.log('divClick');
-      }
-    }
-  }
+import { getCategories, getSubCategories, getCategoriesDetail } from 'network/category';
+
+import {POP, SELL, NEW} from "@/common/const";
+ import {tabControlMixin} from "@/common/mixins";
+ 
+export default {
+	name: 'Category',
+	components: {
+		NavBar,
+		TabMenu,
+		TabContentCategory,
+		TabControl,
+		TabContentDetail,
+		Scroll //导入插件
+	},
+	 mixins: [tabControlMixin],
+	data() {
+		return {
+			getCateDatelist: [],
+			scroll: null,
+			categoryData: {}, //新建的商品分类对象
+			currentIndex: -1, 
+			tabindex:0
+		};
+	},
+	computed: {
+		showsubcategory() {
+			//如果当前左侧的索引是-1那么默认为空对象不显示数据，否则显示对应的分类对象里的对应索引的数据
+			if (this.currentIndex === -1) return {};
+			return this.categoryData[this.currentIndex].subcategories;
+		},
+		showDetail() {
+			if (this.currentIndex === -1) return [];
+			return this.categoryData[this.currentIndex].subcateDetail[this.currentType];
+		}
+	},
+	created() {
+		//请求分类数据
+		this._getCategories();
+	},
+	// 组件创建完后调用
+	mounted() {
+		console.log('a');
+	},
+	methods: {
+		_getCategories() {
+			getCategories().then(res => {
+				console.log(res);
+				//获取分类数据
+				this.getCateDatelist = res.data.category.list;
+
+				//初始化每个类别子数据,新建一个分类对象，里面包含子分类和分类详情数据
+				console.log(this.getCateDatelist.length);
+				for (let i = 0; i < this.getCateDatelist.length; i++) {
+					this.categoryData[i] = {
+						subcategories: {},
+						subcateDetail: {
+							pop: [], //流行
+							new: [], //新品
+							sell: [] //热销
+						}
+					};
+				}
+				//默认请求第一个子分类的数据
+				this._getSubCategories(0);
+			});
+		},
+		selectIndex(index) {
+			console.log(index);
+			this._getSubCategories(index);
+		},
+		_getSubCategories(index) {
+			this.currentIndex = index;
+			//找到分类的对应索引的maitKey
+			const mailKey = this.getCateDatelist[index].maitKey;
+			getSubCategories(mailKey).then(res => {
+				console.log(res);
+				//子分类数据绑定
+				this.categoryData[index].subcategories = res.data;
+				this.categoryData = { ...this.categoryData };
+				this._getDetail(POP);
+				this._getDetail(NEW);
+				this._getDetail(SELL);
+				console.log('tabControl被激活');
+				//tabcontrol清楚之前的选中状态,默认是第一个综合
+				this.currentType= POP
+				this.tabindex=0
+			});
+		},
+		_getDetail(type) {
+			//获取当前点击的miniWallerKey
+			const minikey = this.getCateDatelist[this.currentIndex].miniWallkey;
+			console.log(minikey);
+			//获取详情
+			getCategoriesDetail(minikey,type).then(res => {
+				console.log(res)
+				//保存获取的数据
+				this.categoryData[this.currentIndex].subcateDetail[type] = res
+				this.categoryData = {...this.categoryData}
+			});
+		}
+	}
+};
 </script>
 
 <style scoped>
-  .wrapper {
-    height: 150px;
-    background-color: red;
-
-    overflow: hidden;
-    /*overflow-y: scroll;*/
-  }
+/* Unable to preventDefault inside passive event listener due to target being treated as passive 解决重复点击菜单的时候弹出以上错误 */
+/*
+遗留问题：
+当点击选项卡切换的时候，右侧没有回到顶部
+点击不同大选项卡里的小选卡，当前索引状态不能回到初始的第一个选中状态
+*/
+* {
+	touch-action: pan-y;
+}
+.wrapper {
+	height: 100vh;
+	overflow: hidden;
+	/*overflow-y: scroll;*/
+}
+.content {
+	background-color: #fff;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 44px;
+	bottom: 49px;
+	display: flex;
+}
+.category-nav {
+	background-color: #02ace4;
+	color: #fff;
+}
+.tab-content {
+	flex: 1;
+	height: 100%;
+}
 </style>

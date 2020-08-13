@@ -6,6 +6,7 @@ import Cart from '../views/cart/Cart.vue'
 import Profile from '../views/profile/Profile.vue'
 import News from '../views/news/News.vue'
 import Phone from '../views/phone/Phone.vue'
+import Detail from '../views/detail/Detail.vue'
 //const Cart = () => import('../views/cart/Cart');
 // const Category = () => import('../views/category/Category');
 // const Profile = () => import('../views/profile/Profile');
@@ -45,20 +46,25 @@ const routes = [
     component: Profile
   },
   {
-    path:'/news',
-    name:'News',
-    component:News
+    path: '/news',
+    name: 'News',
+    component: News
   },
   {
-    path:'/phone',
-    name:'Phone',
-    component:Phone
+    path: '/phone',
+    name: 'Phone',
+    component: Phone
+  },
+  {
+    path: '/detail/:iid',
+    name: 'Detail',
+    component: Detail,
   }
 ]
 
 
 const router = new VueRouter({
-  mode: 'hash',  //去掉地址栏#
+  mode: 'hash', //去掉地址栏#
   base: process.env.BASE_URL,
   routes
 })

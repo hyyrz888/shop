@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="wrapper">
-    <keep-alive exclude="Detail">
+    <keep-alive exclude="Detail">  <!--内页不被缓存-->
       <router-view/>
     </keep-alive>
 <!-- 使用组件 -->
